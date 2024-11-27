@@ -168,7 +168,7 @@ class compression:
 
                         long_12 = len(File_information5_2)
 
-                        if i == 1:
+                        
                         	
 
                         if i == 1:
