@@ -248,6 +248,8 @@ class compression:
                                     T16=""
                                     Transform="1"+Transform
                                     Encode_Shora_Yura_long=len(Transform)
+                                    long_F=Encode_Shora_Yura_long
+                                    #print(Transform)
                                     while block < long_F:
                                        times_c_c = 0
                                        T8 = Transform[block : block + 1]
@@ -262,6 +264,7 @@ class compression:
                                     if shora==1:
                                         size_last=len(T15)
                                         base256_string = T15[:size_last-1]
+                                        #print(base256_string)
                                     
                                         # Step 2: Convert the base 256 string to product and byte values
                                         byte_values = [int(num, 16) for num in base256_string.split()]
@@ -278,7 +281,10 @@ class compression:
                                         # Print Line 3: Product of the Byte Values
                                         #print(f"Product of Byte Values: {product}")
                                         T16=product
+                                        
                                         T10=format(T16,'01b')
+                                        #print(T10)
+                                        
                                         
                                         
                                         
@@ -300,7 +306,7 @@ class compression:
                                     long_one_time = len(T10)
 
                                     if (
-                                        times_compress >=1000
+                                        times_compress >=0
                                        
                                     ):
                                         stop_compress = 1
@@ -514,6 +520,7 @@ class compression:
                                     Shora_decode=1
                                     if Shora_decode==1:
                                         product = int(T8,2)  # Example input: 597
+                                        #print(product)
                                         
                                         # Step 2: Factorize the product into possible byte values (0-255)
                                         factors = []
@@ -554,6 +561,7 @@ class compression:
                                         # Print Line 5: Decoded Message in Base 256 (hexadecimal)
                                         #print(f"Decoded Message in Base 256: {base256_message}")
                                         T8=base256_message
+                                        #print(T8)
                                         
                                         
                                         
@@ -561,21 +569,50 @@ class compression:
                                         #print("The decoded message based on the byte values is displayed above.")                                  
                                     
                                     Shora_Fury_decode=T8
-                                    while block < long_F:
-                                        T8 = Shora_Fury_decode[block : block + 1]
-                                        if T8=="2":
-                                            TUPLE+="0"
-                                        elif T8=="3":
-                                            TUPLE+="1"
+                                    
+                                    def decode_message(input_message, mapping):
+                                        """
+                                      Decodes a message based on a given mapping.
+                                    
+                                        Parameters:
+                                        input_message (str): The message to decode.
+                                        mapping (dict): A dictionary where keys are characters to replace, and values are their replacements.
+                                    
+                                        Returns:
+                                        str: The decoded message.
+                                        """
+                                        # Decode the input message using the mapping
+                                        decoded_message = ''.join(mapping.get(char, char) for char in input_message)
+                                    
+                                        return decoded_message
+                                    
+                                    # Example usage
+                                    if __name__ == "__main__":
+                                        # Long input message (example)
+                                        input_message =Shora_Fury_decode
                                         
-                                        block+=1
+                                        # Define the mapping rules
+                                        mapping = {
+                                            "2": "0",  # Map "2" to "0"
+                                            "3": "1",  # Map "3" to "1"
+                                            " ": ""    # Remove spaces
+                                        }
+                                        
+                                        # Decode the message
+                                        decoded_message = decode_message(input_message, mapping)
+                                        
+                                        # Print the decoded message
+                                      
+                                    TUPLE=decoded_message[::-1]
+                                    
+                                   
                                         
                                         
 
 
                                     TUPLE1 = TUPLE[1:]
                                     INFO = TUPLE
-                                    # print(INFO)
+                                    #print(INFO)
 
                                     long_L = len(TUPLE)
                                     Tc += 1
