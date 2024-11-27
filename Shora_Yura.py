@@ -510,236 +510,70 @@ class compression:
 
                                     block = 0
                                     TUPLE = ""
+                                    T8 = INFO
+                                    Shora_decode=1
+                                    if Shora_decode==1:
+                                        product = int(T8,2)  # Example input: 597
+                                        
+                                        # Step 2: Factorize the product into possible byte values (0-255)
+                                        factors = []
+                                        for i in range(2, 256):
+                                            while product % i == 0:
+                                                factors.append(i)
+                                                product //= i
+                                            if product == 1:
+                                                break
+                                        
+                                        if 1 < product < 256:
+                                            factors.append(product)
+                                        
+                                        # Print Line 1: Input Product
+                                        #print(f"Input Product: {product}")
+                                        
+                                        # Print Line 2: Factors (decoded byte values)
+                                        #print(f"Factors (decoded byte values): {factors}")
+                                        
+                                        # Step 3: Calculate the product of the factors to confirm
+                                        calculated_product = 1
+                                        for byte in factors:
+                                            calculated_product *= byte
+                                        
+                                        # Print Line 3: Product of Byte Values
+                                        #print(f"Product of Byte Values: {calculated_product}")
+                                        
+                                        # Step 4: Decode the byte values into a message (if possible)
+                                        decoded_message = ''.join(chr(n) if 0 <= n <= 255 else '' for n in factors)
+                                        
+                                        # Print Line 4: Decoded Message (characters)
+                                        #print(f"Decoded Message (from byte values): {decoded_message}")
+                                        
+                                        # Step 5: Convert the decoded byte values to base 256 (hexadecimal)
+                                        base256_representation = [format(num, 'x') for num in factors]
+                                        base256_message = ' '.join(base256_representation)
+                                        
+                                        # Print Line 5: Decoded Message in Base 256 (hexadecimal)
+                                        #print(f"Decoded Message in Base 256: {base256_message}")
+                                        T8=base256_message
+                                        
+                                        
+                                        
+                                        # Final message display
+                                        #print("The decoded message based on the byte values is displayed above.")                                  
+                                    
+                                    Shora_Fury_decode=T8
                                     while block < long_F:
-                                        take_c_or_l = INFO[block : block + 24]
-                                        long_l = len(take_c_or_l)
-                                        # print(long_l)
-                                        if INFO[block : block + 2] == "11":
-                                            block += 2
-                                            T8 = INFO[block : block + 25]
-                                            TUPLE += T8
-                                            block += 25
+                                        T8 = Shora_Fury_decode[block : block + 1]
+                                        if T8=="2":
+                                            TUPLE+="0"
+                                        elif T8=="3":
+                                            TUPLE+="1"
+                                        
+                                        block+=1
+                                        
+                                        
 
-                                        elif INFO[block : block + 2] != "11":
-                                        	if INFO[block : block + 1]=="0":
-                                        	   block +=1
-                                        	   find_c_v=0
-                                        	else:
-                                        	   block+=3
-                                        	   find_c_v=4
-                                        	   #print(find_c_v)
-                                            
-                                            # print(take_c_or_l)
 
-                                            # print("4")
-                                            # print(len(num3))
-                                            # print(num3)
-                                            # binary_representation+length_tree_after+binary_representation_before_long1#
-
-                                            # print(length_tree_after) #long after
-                                            # print(times_after)#binary repreatation
-                                            # print(binary_representation_before_long)#long before file
-                                            # print(times_after)#long after
-
-                                            # print(binary_representation_before_long)#long after
-
-                                            # print(binary_to_number_number_after)#binary represation
-                                        	if find_c_v!=4:
-	                                            if INFO[block:block+2]=="00":
-	                                            	find_c_v=1
-	                                            	block+=2
-	                                            elif INFO[block:block+2]=="01":
-	                                            	find_c_v=3
-	                                            	block+=2                                           	
-	                                            elif INFO[block:block+2]=="10":
-	                                            	find_c_v=2
-	                                            	block+=2
-	                                            elif INFO[block:block+2]=="11":
-	                                            	find_c_v=0
-	                                            	block+=2
-	                                            	
-                                        	if find_c_v==find_c_v:                                                                            
-	                                            Bif1 = int(
-	                                                (INFO[block : block + 3]), 2
-	                                            )
-	                                            Bif1 += 1
-	                                            block += 3
-	                                            if Bif1==0:
-	                                            	read_b==1
-	                                            else:
-	                                                read_b=Bif1                                                                                                                                                                                                                                                                                               
-	                                            Bi3 = int(
-	                                                (INFO[block : block + read_b]), 2
-	                                            )
-	                                            # print(times_after)
-	
-	                                            block += read_b
-	                                            times_after = int(
-	                                                (INFO[block : block + 5]), 2
-	                                            )
-	                                            times_after = times_after + 1
-	                                            # print(binary_representation_before_long)
-	
-	                                            block += 5
-	
-	                                            binary_representation_before_long = int(
-	                                                (INFO[block : block + 5]), 2
-	                                            )
-	                                            # print(binary_to_number_number_after)
-	
-	                                            block += 5
-	                                            #print(block)
-	
-	
-	                                            # open 3 key
-	                                            # binary length tree start and finish and binanary represation
-	
-	                                            # print(len(num3))
-	
-	                                            # Continuation: another loop to perform further calculations
-	                                            
-	                                            finish = 0
-	                                            finish1 = 0
-	                                            times = 0
-	                                            from qiskit import QuantumCircuit
-	                                            circuit = QuantumCircuit(26)
-	                                            count_number = 0
-	                                            while finish1 != 1:
-                                                        	                                                
-	                                                count_number=int(count_number)
-	                                                QuantumCircuit(count_number)
-	                                                num = count_number
-	                                                
-	                                                #print(num)
-	                                                binary_representation_before = (
-	                                                    len(format(num, "01b"))
-	                                                )
-	                                                finish = 0
-	                                                times = 0
-	                                                while finish != 2:
-	                                                    if num < 0:
-	                                                        print(
-	                                                            "Please enter a non-negative integer."
-	                                                        )
-	                                                    else:
-	                                                        max_length = len(
-	                                                            format(num, "b")
-	                                                        )
-	                                                        binary_numbers = []
-	                                                        for length in range(
-	                                                            1, max_length + 1
-	                                                        ):
-	                                                            for i in range(
-	                                                                2**length
-	                                                            ):
-	                                                                binary_numbers.append(
-	                                                                    format(
-	                                                                        i,
-	                                                                        "0"
-	                                                                        + str(
-	                                                                            length
-	                                                                        )
-	                                                                        + "b",
-	                                                                    )
-	                                                                )
-	                                                        last_binary = None
-	                                                        for (
-	                                                            index,
-	                                                            binary,
-	                                                        ) in enumerate(
-	                                                            binary_numbers
-	                                                        ):
-	                                                            if index > num:
-	                                                                break
-	                                                            last_binary = (
-	                                                                binary,
-	                                                                index,
-	                                                            )
-	                                                        if last_binary:
-	                                                            (
-	                                                                binary_representation,
-	                                                                index,
-	                                                            ) = last_binary
-	                                                            long_br = len(
-	                                                                binary_representation
-	                                                            )
-	                                                            Bi = int(
-	                                                                binary_representation,
-	                                                                2,
-	                                                            )
-	                                                            Bif = format(
-	                                                                Bi, '01b'
-	                                                            )
-	                                                            Bif2 = len(Bif)
-	                                                            # print(long_br)
-	                                                            binary_to_number = int(
-	                                                                binary_representation,
-	                                                                2,
-	                                                            )
-	
-	                                                            binary_representation = format(
-	                                                                binary_to_number,
-	                                                                "01b",
-	                                                            )
-	                                                            num = (
-	                                                                binary_to_number
-	                                                            )
-	                                                            length_tree = len(
-	                                                                binary_representation
-	                                                            )
-	                                                            times += 1
-	                                                            if length_tree < 8:
-	                                                                count_number += (
-	                                                                    1
-	                                                                )
-	                                                                finish = 2
-	                                                            if (
-	                                                                length_tree < 8
-	                                                                and binary_representation_before
-	                                                                == binary_representation_before_long
-	                                                                and times_after
-	                                                                == times
-	                                                                and Bif1 == Bif2
-	                                                                and Bi == Bi3
-	                                                            ):
-	                                                                finish1 = 1
-	
-	                                                                # print("binary_representation_before_long")
-	                                                                # print(binary_representation_before_long)
-	                                                                # print("times_after")
-	                                                                # print(times_after)
-	                                                                # print("length_tree_after")
-	                                                                # print(length_tree)
-	                                                                # print("binary_to_number_number_after")
-	                                                                # print(binary_to_number_number_after)
-	                                                                # print(count_number)
-	                                                                count_number = (
-	                                                                    count_number
-	                                                                    - 1
-	                                                                )
-	                                                                if find_c_v==1:
-	                                                                	count_number=count_number+384
-	                                                                	
-	                                                                elif find_c_v==2:
-	                                                                	count_number=count_number+256                                                           
-	
-	                                                                	
-	                                                                elif find_c_v==3:
-	                                                                	count_number=count_number+896                                                                       	                                                          
-	                                                                elif find_c_v==4:
-	                                                                	count_number=count_number+1152                                                                    	                                                          
-	
-	
-	                                                                IFC = format(
-	                                                                    count_number,
-	                                                                    "025b",
-	                                                                )
-	                                                                TUPLE += IFC
-	
-	                                                                # print(block)
-	                                                                #print(IFC)
-
-                                    TUPLE1 = TUPLE
+                                    TUPLE1 = TUPLE[1:]
                                     INFO = TUPLE
                                     # print(INFO)
 
