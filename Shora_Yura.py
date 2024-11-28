@@ -247,56 +247,62 @@ class compression:
                                     T15=""
                                     T16=""
                                     Transform="1"+Transform
-                                    Encode_Shora_Yura_long=len(Transform)
-                                    long_F=Encode_Shora_Yura_long
-                                    #print(Transform)
-                                    while block < long_F:
-                                       times_c_c = 0
-                                       T8 = Transform[block : block + 1]
-                                       if T8=="0":
-                                            T15+="2 "
-                                       else:
+                                    T8 = INFO
+                                    Shora_decode=1
+                                    if Shora_decode==1:
+                                        # Input product
+                                            try:
+                                                product = int(Transform,2)
+                                                #print(product)
+                                                
+                                                if product <= 0:
+                                                    raise ValueError("Product must be a positive integer greater than 0.")
+                                                
+                                                # Step 1: Factorize the product into byte values (0-255)
+                                                factors = []
+                                                for i in range(2, 256):
+                                                    while product % i == 0:
+                                                        factors.append(i)
+                                                        product //= i
+                                                    if product == 1:
+                                                        break  # Exit early if fully factored
                                             
-                                            T15+="3 "
-  
-                                       block+=1 
-                                    shora=1
-                                    if shora==1:
-                                        size_last=len(T15)
-                                        base256_string = T15[:size_last-1]
-                                        #print(base256_string)
+                                                # If product is still greater than 1 and less than 256, it should be a valid byte
+                                                if 1 < product < 256:
+                                                    factors.append(product)
+                                            
+                                                # Step 2: Print the results
+                                                #print(f"Input Product: {product}")
+                                                #print(f"Factors (decoded byte values): {factors}")
+                                            
+                                                # Step 3: Confirm the product
+                                                calculated_product = 1
+                                                for byte in factors:
+                                                    calculated_product *= byte
+                                                #print(f"Product of Byte Values: {calculated_product}")
+                                            
+                                                # Step 4: Decode the byte values into a message (if possible)
+                                                decoded_message = ''
+                                                for n in factors:
+                                                    if 32 <= n <= 126:  # Check if the byte corresponds to a printable ASCII character
+                                                        decoded_message += chr(n)
+                                                #print(f"Decoded Message (from byte values): {decoded_message}")
+                                            
+                                                # Step 5: Convert to Base 256 (Hexadecimal)
+                                                base256_message = ' '.join(format(num, 'x') for num in factors)
+                                                #print(f"Decoded Message in Base 256: {base256_message}")
+                                            
+                                                # Step 6: Convert to Binary (8 bits each)
+                                                binary_message = ''.join(format(num, '08b') for num in factors)
+                                                #print(f"Decoded Message in Binary (8 bits each): {binary_message}")
+                                            
+                                            except ValueError as e:
+                                                print(f"Error: {e}")
+                                      
                                     
-                                        # Step 2: Convert the base 256 string to product and byte values
-                                        byte_values = [int(num, 16) for num in base256_string.split()]
-                                        product = 1
-                                        for byte in byte_values:
-                                            product *= byte
-                                        
-                                        # Print Line 1: Input Base 256
-                                        #print(f"Input Base 256: {base256_string}")
-                                        
-                                        # Print Line 2: Byte Values (decoded from base 256)
-                                        #print(f"Byte Values (decoded from base 256): {byte_values}")
-                                        
-                                        # Print Line 3: Product of the Byte Values
-                                        #print(f"Product of Byte Values: {product}")
-                                        T16=product
-                                        
-                                        T10=format(T16,'01b')
-                                        #print(T10)
-                                        
-                                        
-                                        
-                                        
-                                        # Step 3: Convert the byte values back to a message
-                                        decoded_message = ''.join(chr(byte) for byte in byte_values if 0 <= byte <= 255)
-                                        
-                                        # Print Line 4: Decoded Message
-                                        #print(f"Decoded Message (from byte values): {decoded_message}")
-                                        
-                                        # Step 4: Convert the decoded message (numbers) to base 256
-                                        base256_message = ' '.join(format(num, 'x') for num in byte_values)
-                                        #print(f"Decoded Message in Base 256: {base256_message}")
+                                    #print(binary_message)
+                                    T10=binary_message
+                                    
     
                                                                  
 
@@ -517,99 +523,55 @@ class compression:
                                     block = 0
                                     TUPLE = ""
                                     T8 = INFO
-                                    Shora_decode=1
-                                    if Shora_decode==1:
-                                        product = int(T8,2)  # Example input: 597
-                                        #print(product)
+                                    T15=""
+                                    Transform=T8
+                                    shora=1
+                                    if shora==1:
+
                                         
-                                        # Step 2: Factorize the product into possible byte values (0-255)
-                                        factors = []
-                                        for i in range(2, 256):
-                                            while product % i == 0:
-                                                factors.append(i)
-                                                product //= i
-                                            if product == 1:
-                                                break
-                                        
-                                        if 1 < product < 256:
-                                            factors.append(product)
-                                        
-                                        # Print Line 1: Input Product
-                                        #print(f"Input Product: {product}")
-                                        
-                                        # Print Line 2: Factors (decoded byte values)
-                                        #print(f"Factors (decoded byte values): {factors}")
-                                        
-                                        # Step 3: Calculate the product of the factors to confirm
-                                        calculated_product = 1
-                                        for byte in factors:
-                                            calculated_product *= byte
-                                        
-                                        # Print Line 3: Product of Byte Values
-                                        #print(f"Product of Byte Values: {calculated_product}")
-                                        
-                                        # Step 4: Decode the byte values into a message (if possible)
-                                        decoded_message = ''.join(chr(n) if 0 <= n <= 255 else '' for n in factors)
-                                        
-                                        # Print Line 4: Decoded Message (characters)
-                                        #print(f"Decoded Message (from byte values): {decoded_message}")
-                                        
-                                        # Step 5: Convert the decoded byte values to base 256 (hexadecimal)
-                                        base256_representation = [format(num, 'x') for num in factors]
-                                        base256_message = ' '.join(base256_representation)
-                                        
-                                        # Print Line 5: Decoded Message in Base 256 (hexadecimal)
-                                        #print(f"Decoded Message in Base 256: {base256_message}")
-                                        T8=base256_message
-                                        #print(T8)
-                                        
-                                        
-                                        
-                                        # Final message display
-                                        #print("The decoded message based on the byte values is displayed above.")                                  
-                                    
-                                    Shora_Fury_decode=T8
-                                    
-                                    def decode_message(input_message, mapping):
-                                        """
-                                      Decodes a message based on a given mapping.
-                                    
-                                        Parameters:
-                                        input_message (str): The message to decode.
-                                        mapping (dict): A dictionary where keys are characters to replace, and values are their replacements.
-                                    
-                                        Returns:
-                                        str: The decoded message.
-                                        """
-                                        # Decode the input message using the mapping
-                                        decoded_message = ''.join(mapping.get(char, char) for char in input_message)
-                                    
-                                        return decoded_message
-                                    
-                                    # Example usage
-                                    if __name__ == "__main__":
-                                        # Long input message (example)
-                                        input_message =Shora_Fury_decode
-                                        
-                                        # Define the mapping rules
-                                        mapping = {
-                                            "2": "0",  # Map "2" to "0"
-                                            "3": "1",  # Map "3" to "1"
-                                            " ": ""    # Remove spaces
-                                        }
-                                        
-                                        # Decode the message
-                                        decoded_message = decode_message(input_message, mapping)
-                                        
-                                        # Print the decoded message
-                                      
-                                    TUPLE=decoded_message[::-1]
-                                    
+                                            try:
+                                                # Step 1: Ask the user to enter a binary string without spaces
+                                                binary_input = Transform
+                                                
+                                                # Step 2: Validate the binary input and decode into byte values (0-255)
+                                                if len(binary_input) % 8 != 0:
+                                                    raise ValueError("Binary input must be a multiple of 8 bits.")
+                                                
+                                                byte_values = [int(binary_input[i:i+8], 2) for i in range(0, len(binary_input), 8)]
+                                            
+                                                # Step 3: Convert the byte values into base 256 (hexadecimal)
+                                                base256_message = ''.join(format(num, '02x') for num in byte_values)
+                                            
+                                                # Step 4: Calculate the product of the byte values
+                                                product = 1
+                                                for byte in byte_values:
+                                                    product *= byte
+                                            
+                                                # Step 5: Calculate the binary representation of the product
+                                                product_binary = format(product, 'b')  # Binary representation without spaces
+                                            
+                                                # Step 6: Convert byte values back to binary representation (8 bits each, no spaces)
+                                                binary_message = ''.join(format(num, '08b') for num in byte_values)
+                                            
+                                                # Step 7: Display the results
+                                                #print(f"Input Binary: {binary_input}")
+                                                #print(f"Byte Values (decoded from binary): {byte_values}")
+                                                #print(f"Product of Byte Values: {product}")
+                                                #print(f"Binary Representation of Product: {product_binary}")
+                                                #print(f"Decoded Message in Base 256 (hexadecimal): {base256_message}")
+                                                #print(f"Binary Representation (8 bits each, no spaces): {binary_message}")
+                                                #print("The decoded message based on the byte values is displayed above.")
+                                            
+                                            except ValueError as e:
+                                                print(f"Error: {e}")
                                    
                                         
                                         
 
 
+                                    T10=product_binary
+                                    #print(T10)
+                                    TUPLE=T10
                                     TUPLE1 = TUPLE[1:]
                                     INFO = TUPLE
                                     #print(INFO)
