@@ -406,8 +406,7 @@ class compression:
                                         File_information5_2 = Clear
 
                                         jl = width_bits3
-                                        #import paq
-                                        #jl = paq.compress(jl)
+                   
                                         
                                      
 
