@@ -251,7 +251,7 @@ class compression:
                                     Shora_decode=1
                                     if Shora_decode==1:
                                         # Step 1: Input the decimal number
-                                        original_number = 268  # Example input, replace with any number
+                                        original_number =int(Transform,2) # Example input, replace with any number
                                         #print(f"Original Number (Decimal): {original_number}")
                                         
                                         # Step 2: Factorize the number into its prime factors
